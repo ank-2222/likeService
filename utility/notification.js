@@ -1,15 +1,6 @@
-const Queue = require("bull");
 require("dotenv").config();
 
-const { sendMail } = require("./notificationProcess");
-
-const sendEmailQueue = new Queue("sendMail", {
-  redis: {
-    host: "127.0.0.1",
-    port: 6379,
-    password: "root",
-  },
-});
+const sendEmailQueue = require("../helper/redisConfig");
 
 exports.sendNotification = async (content_id) => {
   const data = {
@@ -21,12 +12,10 @@ exports.sendNotification = async (content_id) => {
   };
 
   try {
-    sendEmailQueue.add(data, options).then(() => {
-      console.log("Added to queue");
-    });
-    sendEmailQueue.process(async (job) => {
-      return await sendMail(job.data.contentId);
-    });
+
+   sendEmailQueue.add(data, options).then(()=>{
+    console.log("Added to queue");
+   })
   } catch (error) {
     console.log("Error in sending notification");
   }
