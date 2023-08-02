@@ -2,6 +2,7 @@ const db = require("../../database/db");
 const { v4: uuidv4 } = require("uuid");
 var moment = require("moment");
 const { sendNotification } = require("../../utility/notification");
+const sendEmailQueue = require("../../helper/bullConfig");
 
 exports.addLikeContent = async (req, res) => {
   const id = uuidv4();
@@ -92,14 +93,25 @@ exports.totalLikeCount = async (req, res) => {
           db.query(sql, function (err, result) {
             if (err) throw err;
             else{
-                sendNotification(content_id);
 
-                const likeCount =result[0].totalLike;
+
+                
+            
+
+                const likeCount = result[0].totalLike;
                 res.status(200).json({ likeCount });
 
                 if(likeCount===100){
+                  let userMail = `select user.email from user where id IN (select user_id from content where id = '${content_id}')`;
 
-                    sendNotification(content_id);
+                  db.query(userMail,async(err,result)=>{
+                    if(err) throw err;
+                    else{
+                      sendNotification(result[0].email);
+    
+                    }
+                  })
+                 
                 }
             }
           });

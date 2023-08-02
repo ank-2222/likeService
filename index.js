@@ -6,7 +6,7 @@ const port = process.env.PORT||5050;
 
 
 const app = express();
-
+require('./processor/index');
 
 //routes
 const userRoute = require("./routes/user/user");

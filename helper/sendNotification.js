@@ -1,28 +1,21 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    auth: {
-      user: "paula.murray@ethereal.email",
-      pass: "ABqb1n53qMT6jE2xbV",
-    },
-  });
 const sendMail=(email)=> {
     console.log(email);
     return new Promise((resolve, reject) => {
       let mailOptions = {
         from: 'fromuser@domain.com',
         to: email,
-        subject: 'Bull - npm',
-        text: "This email is from bull job scheduler tutorial.",
+        subject: 'congratulations on 100 Like',
+        text: "Your content has got 100 likes.",
       };
       let mailConfig = {
-        service: 'gmail',
+        host: 'smtp.ethereal.email',
+        port: 587,
         auth: {
-          user: 'fromuser@domain.com',
-          pass: 'mail_password_here'
+            user: 'nathanial.fadel@ethereal.email',
+            pass: 'J8jtJcCgVhWDWAfzRR'
         }
       };
       nodemailer.createTransport(mailConfig).sendMail(mailOptions, (err, info) => {
@@ -35,6 +28,4 @@ const sendMail=(email)=> {
     });
   }
 
-
-
-  module.exports = sendMail;
+module.exports = sendMail;
