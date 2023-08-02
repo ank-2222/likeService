@@ -1,8 +1,8 @@
-require("dotenv").config();
+require("dotenv").config({path:"../.env"});
 const nodemailer = require("nodemailer");
 
 const sendMail=(email)=> {
-    console.log(email);
+    console.log("sending notification to ->",email);
     return new Promise((resolve, reject) => {
       let mailOptions = {
         from: 'fromuser@domain.com',
@@ -14,13 +14,13 @@ const sendMail=(email)=> {
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'nathanial.fadel@ethereal.email',
-            pass: 'J8jtJcCgVhWDWAfzRR'
+            user: process.env.MAIL_SENDER_AUTH,
+            pass: process.env.MAIL_SENDER_PASS
         }
       };
       nodemailer.createTransport(mailConfig).sendMail(mailOptions, (err, info) => {
         if (err) {
-          reject(err);
+          reject(`error in mail transporter ->,${err}`);
         } else {
           resolve(info);
         }

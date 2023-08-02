@@ -1,12 +1,11 @@
 const mysql = require("mysql2");
-require("dotenv").config();
-
+require("dotenv").config({path:'../.env'});
 const pool = mysql.createPool({
-    host: 'localhost',
-    port:3306,
-    user:'root',
-    database: 'likeservice',
-    password:'password'
+    host: process.env.DB_HOST,
+    port:process.env.DB_PORT,
+    user:process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password:process.env.DB_PASSWORD
 
 });
 

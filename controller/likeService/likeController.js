@@ -5,21 +5,21 @@ const { sendNotification } = require("../../utility/notification");
 const sendEmailQueue = require("../../helper/bullConfig");
 
 exports.addLikeContent = async (req, res) => {
+  try {
   const id = uuidv4();
   const { user_id, content_id } = req.body;
 
   const CurrentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
 
-  try {
-    let checkContent = `select * from content where id = '${content_id}'`;
+    const checkContent = `select * from content where id = '${content_id}'`;
 
     db.query(checkContent, async (err, result) => {
       if (err) throw err;
       else {
         if (result.length == 0) {
-          res.status(404).send("Content not found");
+          res.status(400).send("Content not found");
         } else {
-          let checkUser = `select * from likes where '${content_id}' IN (select id from content where user_id ='${user_id}' ) and liked_by ='${user_id}'`;
+          const checkUser = `select * from likes where '${content_id}' IN (select id from content where user_id ='${user_id}' ) and liked_by ='${user_id}'`;
 
           db.query(checkUser, async (err, result) => {
             if (err) throw err;
@@ -30,7 +30,7 @@ exports.addLikeContent = async (req, res) => {
                 res.status(400).send("User has already liked the content");
                 return;
               } else {
-                let sql = `INSERT INTO likes ( id,content_id,liked_by,created_at) VALUES ('${id}','${content_id}','${user_id}','${CurrentDateTime}')`;
+                const sql = `INSERT INTO likes ( id,content_id,liked_by,created_at) VALUES ('${id}','${content_id}','${user_id}','${CurrentDateTime}')`;
 
                 db.query(sql, function (err, result) {
                   if (err) throw err;
@@ -51,15 +51,15 @@ exports.checkLikedContent = async (req, res) => {
   const { user_id, content_id } = req.body;
 
   try {
-    let checkContent = `select * from content where id = '${content_id}'`;
+    const checkContent = `select * from content where id = '${content_id}'`;
 
     db.query(checkContent, async (err, result) => {
       if (err) throw err;
       else {
-        if (result.length == 0) {
+        if (!result?.length) {
           res.status(404).send("Content not found");
         } else {
-          let sql = `select count(*) as totalLike from likes where liked_by ='${user_id}' and content_id='${content_id}'`;
+          const sql = `select count(*) as totalLike from likes where liked_by ='${user_id}' and content_id='${content_id}'`;
 
           db.query(sql, function (err, result) {
             if (err) throw err;
@@ -80,13 +80,14 @@ exports.totalLikeCount = async (req, res) => {
   const { content_id } = req.body;
 
   try {
+    // console.log("inside")
     let checkContent = `select * from content where id = '${content_id}'`;
 
     db.query(checkContent, async (err, result) => {
       if (err) throw err;
       else {
         if (result.length == 0) {
-          res.status(404).send("Content not found");
+          res.status(400).send("Content not found");
         } else {
           let sql = `select count(liked_by) as totalLike from likes where content_id = '${content_id}'`;
 
@@ -100,6 +101,7 @@ exports.totalLikeCount = async (req, res) => {
 
                 const likeCount = result[0].totalLike;
                 res.status(200).json({ likeCount });
+              //  sendNotification('ankit@gmail.com');
 
                 if(likeCount===100){
                   let userMail = `select user.email from user where id IN (select user_id from content where id = '${content_id}')`;
@@ -107,6 +109,7 @@ exports.totalLikeCount = async (req, res) => {
                   db.query(userMail,async(err,result)=>{
                     if(err) throw err;
                     else{
+                      
                       sendNotification(result[0].email);
     
                     }

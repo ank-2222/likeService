@@ -1,5 +1,6 @@
 const Queue = require('bull');
+require("dotenv").config({path:"../.env"});
 
-const sendEmailQueue = new Queue('sendMailQueue', 'redis://127.0.0.1:6379');
+const sendEmailQueue = new Queue('sendMailQueue', `${process.env.REDIS_URI}`);
 
 module.exports = sendEmailQueue;
