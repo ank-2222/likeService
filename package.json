@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"nodemon index.js",
+    "start": "nodemon index.js",
+    "worker:dev": "nodemon -r esm processor/emailQueueProcessor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ankit",
@@ -15,6 +16,7 @@
     "bull": "^4.10.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "esm": "^3.2.25",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "moment": "^2.29.4",

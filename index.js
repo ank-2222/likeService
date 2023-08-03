@@ -9,6 +9,11 @@ process.on("uncaughtException", function (err) {
   console.log(`uncaughterror-> ${err}`);
 });
 
+
+
+require('./helper/bullConfig');
+
+
 const app = express();
 require("./processor/index");
 
@@ -28,7 +33,7 @@ app.use("/api", userRoute);
 app.use("/api", likeRoute);
 
 app.get("/", (req, res) => {
-  const CurrentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+  const CurrentDateTime = new Date().toLocaleString();
   res
     .status(200)
     .json({
@@ -46,3 +51,5 @@ app.use(cors);
 app.listen(process.env.PORT, () => {
   console.log(`server is running at port ${port} `);
 });
+
+

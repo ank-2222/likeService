@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes` (
   `id` varchar(60) NOT NULL,
   `content_id` varchar(60) NOT NULL,
-  `liked_by` varchar(30) NOT NULL,
+  `liked_by` varchar(60) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `likes_fk1` (`liked_by`),

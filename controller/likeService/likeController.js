@@ -101,7 +101,7 @@ exports.totalLikeCount = async (req, res) => {
 
                 const likeCount = result[0].totalLike;
                 res.status(200).json({ likeCount });
-              //  sendNotification('ankit@gmail.com');
+           
 
                 if(likeCount===100){
                   let userMail = `select user.email from user where id IN (select user_id from content where id = '${content_id}')`;

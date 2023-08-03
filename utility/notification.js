@@ -1,4 +1,4 @@
-const { options } = require("nodemon/lib/config");
+
 const sendEmailQueue = require("../helper/bullConfig");
 
 exports.sendNotification = async (content_id) => {
@@ -13,9 +13,10 @@ exports.sendNotification = async (content_id) => {
   try {
     // console.log(data);
 
-    sendEmailQueue.add(data,options).then(()=>{
+    const res = sendEmailQueue.add(data,options).then(()=>{
       console.log("added to queue");
     });
+    // console.log(res);
   } catch (error) {
     console.log("Error in sending notification");
   }
