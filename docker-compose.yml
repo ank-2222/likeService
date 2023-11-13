@@ -73,7 +73,7 @@ services:
      
         
   worker:
-    image: nodeapp:v1
+    image: ankit2222/likeservice:latest
     depends_on:
       - redis
     command: npm run worker:dev
