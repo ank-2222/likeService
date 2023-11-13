@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
     .status(200)
     .json({
       HTTPCode:"200",
-      Status: "OK",
+      Status: "OK Server Running",
       message: "Welcome to Home",
       EntryTime: CurrentDateTime,
     });
