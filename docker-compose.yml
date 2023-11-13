@@ -72,17 +72,15 @@ services:
         - 6379:6379
      
         
-  worker:
-    image: ankit2222/likeservice:latest
-    depends_on:
-      - redis
-    command: npm run worker:dev
-    links:
-      - redis
+  # worker:
+  #   image: ankit2222/likeservice:latest
+  #   depends_on:
+  #     - redis
+  #   command: npm run worker:dev
+  #   links:
+  #     - redis
  
-volumes:
-  redis_volume_data:
-  redis_insight_volume_data:
+
 networks:
   internalnet:
     driver: bridge
