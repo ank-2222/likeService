@@ -42,8 +42,8 @@ services:
       - 8000:8000
     expose:
       - 8000
-    depends_on:
-      - mysqldb
+    # depends_on:
+    #   - mysqldb
     
     environment:
       PORT : 8000
