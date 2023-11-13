@@ -37,7 +37,7 @@ services:
     image: ankit2222/likeservice:latest
     platform: linux/amd64
     volumes:
-      - $HOME/nodeapp:/code
+      - $HOME/ankit2222/likeservice:/code
     ports:
       - 8000:8000
     expose:
