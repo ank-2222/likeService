@@ -31,10 +31,10 @@ services:
       
     
   nodeapp:
-    container_name: nodeappcontainer
+    container_name: likeServiceContainer
     build: .
     # command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm run start'
-    image: nodeapp:v1
+    image: ankit2222/likeservice:latest
     platform: linux/amd64
     volumes:
       - $HOME/nodeapp:/code
