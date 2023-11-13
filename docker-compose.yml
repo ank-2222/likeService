@@ -35,9 +35,9 @@ services:
     #build: .
     # command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm run start'
     image: ankit2222/likeservice:latest
-    platform: linux/amd64
-    volumes:
-      - $HOME/ankit2222/likeservice:/code
+    # platform: linux/amd64
+    # volumes:
+    #   - $HOME/ankit2222/likeservice:/code
     ports:
       - 8000:8000
     expose:
@@ -79,6 +79,6 @@ services:
   #     - redis
  
 
-networks:
-  internalnet:
-    driver: bridge
+# networks:
+#   internalnet:
+#     driver: bridge
